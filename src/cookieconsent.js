@@ -1578,7 +1578,21 @@
                      * If current script's category is on the array of categories
                      * accepted by the user => load script
                      */
-                    if(_inArray(enabled_categories, curr_script_category) > -1){
+
+                    var curr_script_is_match = true;
+                    if (curr_script_category && curr_script_category.length > 0) {
+                        var curr_script_category_arr = curr_script_category.split(',');
+                        
+                        for (let index = 0; index < curr_script_category_arr.length; index++) {
+                            if(_inArray(enabled_categories, curr_script_category_arr[index]) === -1){
+                                curr_script_is_match = false;
+                            }
+                        }
+                    } else {
+                        curr_script_is_match = false;
+                    }
+
+                    if(curr_script_is_match){
 
                         curr_script.type = curr_script.getAttribute('data-type') || 'text/javascript';
                         curr_script.removeAttribute(_config.script_selector);
